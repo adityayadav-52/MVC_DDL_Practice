@@ -1,0 +1,13 @@
+﻿
+@model MVC_DDL.Models.City
+
+<option value="">--Select City--</option>
+
+
+@if (ViewBag.Citylist != null)
+{
+    foreach (var item in ViewBag.Citylist)
+    {
+        <option value="@item.value">@item.Text</option>
+    }
+}

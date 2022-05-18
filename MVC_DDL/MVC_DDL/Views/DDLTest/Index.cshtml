@@ -1,0 +1,57 @@
+﻿@model MVC_DDL.Models.MyDDL
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@if (ViewBag.CountryList != null)
+{
+    @Html.DropDownListFor(a => a.CId, ViewBag.CountryList as SelectList, "--Select Country Name--", new { @class = "form-control" })
+}
+
+
+@Html.DropDownListFor(a => a.SId, new SelectList(""), "--Select States--", new { @class = "form-control" })
+
+
+@Html.DropDownListFor(a => a.CityId, new SelectList(""), "--Select Cities--", new { @class = "form-control" })
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#Cid").change(function () {
+            var countryId = $(this).val();
+            debugger
+            $.ajax({
+                type: "POST",
+                url: "/DDLTest/GetStateList?CId=" + countryId,
+                contentType: "html",
+                success: function (response) {
+                    debugger
+                    $("#SId").empty();
+                    $("#SId").append(response);
+                }
+            })
+        })
+
+
+
+
+        $("#Sid").change(function () {
+            var StateId = $(this).val();
+            debugger
+            $.ajax({
+                type: "POST",
+                url: "/DDLTest/GetCityList?SId=" + StateId,
+                contentType: "html",
+                success: function (response) {
+                    debugger
+                    $("#CityId").empty();
+                    $("#CityId").append(response);
+                }
+            })
+        })
+    })
+</script>
